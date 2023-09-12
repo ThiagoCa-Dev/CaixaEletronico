@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Meu Caixa Eletrônico</title>
+</head>
+	<body>
+
+	<script>
+
+		var saldo = 100; // Variável Global
+
+		function inicio() {
+			var nome = prompt('Digite seu nome:');
+			if (nome !== null && nome !== "") {
+				alert('Olá ' + nome + ', é um prazer ter você por aqui!');
+				menuPrincipal(nome);
+			} else {
+				alert('Nome inválido. Tente novamente.');
+				inicio();
+			}
+		}
+
+		function menuPrincipal(nome) {
+    var escolha = parseInt(prompt(
+        'Selecione uma opção:\n' +
+        '1.) Saldo\n' +
+        '2.) Extrato\n' +
+        '3.) Saque\n' +
+        '4.) Depósito\n' +
+        '5.) Transferência\n' +
+        '6.) Sair'
+    ));
+
+    switch (escolha) {
+        case 1:
+            verificarSenha(nome, verSaldo);
+            break;
+        case 2:
+            verificarSenha(nome, verExtrato);
+            break;
+        case 3:
+            verificarSenha(nome, fazerSaque);
+            break;
+        case 4:
+            verificarSenha(nome, fazerDeposito);
+            break;
+        case 5:
+            verificarSenha(nome, fazerTransferencia);
+            break;
+        case 6:
+            sair(nome);
+            break;
+        default:
+            erro(nome);
+    }
+}
+		function verificarSenha(nome, funcao) {
+			var senha = prompt('Informe sua senha:');
+			if (senha === "3589") {
+				funcao(nome);
+			} else {
+				alert('Senha incorreta. Tente novamente.');
+				menuPrincipal(nome);
+			}
+		}
+
+		function verSaldo(nome) {
+			alert(nome + ', seu saldo atual é: ' + saldo.toFixed(2));
+			menuPrincipal(nome);
+		}
+
+		function verExtrato(nome) {
+			// Implemente aqui a lógica para mostrar o extrato fictício
+			// por exemplo, uma lista de compras ou depósitos
+			var extrato = "Extrato:\n";
+			extrato += "Barraca do seu Zé de R$ 15.00\n";
+			extrato += "Depósito de R$ 200.00\n";
+			extrato += "Netflix de R$ 50.00\n";
+			extrato += "Escapamento de fusca de R$ 150.00\n";
+			extrato += "Rodizio de pizza de R$ 80.00\n";
+			extrato += "Pix recebido R$ 100.00\n";
+			// Você pode adicionar mais transações fictícias aqui
+			alert(extrato);
+			menuPrincipal(nome);
+		}
+
+		function fazerSaque(nome) {
+			var saque = parseFloat(prompt('Informe o valor para saque:'));
+
+			if (isNaN(saque) || saque <= 0) {
+				alert('Operação não autorizada. O valor de saque deve ser maior que zero.');
+			} else if (saque > saldo) {
+				alert('Operação não autorizada. Saldo insuficiente.');
+			} else {
+				saldo -= saque;
+				alert(nome + ', saque de R$ ' + saque.toFixed(2) + ' realizado com sucesso.');
+			}
+			menuPrincipal(nome);
+		}
+
+		function fazerDeposito(nome) {
+			var deposito = parseFloat(prompt('Informe o valor para depósito:'));
+
+			if (isNaN(deposito) || deposito <= 0) {
+				alert('Operação não autorizada. O valor de depósito deve ser maior que zero.');
+			} else {
+				saldo += deposito;
+				alert(nome + ', depósito de R$ ' + deposito.toFixed(2) + ' realizado com sucesso.');
+			}
+			menuPrincipal(nome);
+		}
+
+		function fazerTransferencia(nome) {
+			var contaDestino = parseFloat(prompt('Informe o número da conta de destino:'));
+			var valorTransferencia = parseFloat(prompt('Informe o valor da transferência:'));
+
+			if (isNaN(valorTransferencia) || valorTransferencia <= 0) {
+				alert('Operação não autorizada. O valor da transferência deve ser maior que zero.');
+			} else if (valorTransferencia > saldo) {
+				alert('Operação não autorizada. Saldo insuficiente.');
+			} else {
+				saldo -= valorTransferencia;
+				alert(nome + ', transferência de R$ ' + valorTransferencia.toFixed(2) + ' para a conta ' + contaDestino + ' realizada com sucesso.');
+			}
+			menuPrincipal(nome);
+		}
+
+		function erro(nome) {
+			alert('Por favor, informe um número entre 1 e 6.');
+			menuPrincipal(nome);
+		}
+
+		function sair(nome) {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+				alert(nome + ', foi um prazer ter você por aqui!');
+				window.close();
+			} else {
+				menuPrincipal(nome);
+			}
+		}
+
+		inicio();
+	</script>
+
+</body>
+
+</html>
